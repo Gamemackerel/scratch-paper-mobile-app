@@ -1,5 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, TextInput, Dimensions, SafeAreaView, Platform } from 'react-native';
+import Constants from 'expo-constants';
+import { StyleSheet, TextInput, Dimensions, SafeAreaView, ScrollView } from 'react-native';
 import React, { useState, useEffect } from "react";
 
 const windowDimensions = Dimensions.get('window');
@@ -19,34 +19,31 @@ export default function App() {
     return () => subscription?.remove();
   });
 
-
   return (
-    <SafeAreaView
-      style={styles.container}
-    >
+      <SafeAreaView
+        style={styles.container}
+      >
+        <ScrollView>
         <TextInput 
-            style={[styles.contentInput, {height: dimensions.height}]}
-            placeholder="Enter note content"
+            style={[styles.contentInput, {height: dimensions.height, width: dimensions.width}]}
+            placeholder={ 'hello world '}
             multiline
             value={content} 
             onChangeText={setContent}
-        />
-        <StatusBar style="auto" />
-    </SafeAreaView>
+        /></ScrollView>
+      </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    flex: 1,                                                                                          
+    paddingTop: Constants.statusBarHeight,
+    paddingLeft: 5,
+    paddingRight: 5,
   },
 
   contentInput: {
-    outlineStyle: 'none',
-    paddingTop: '0.5em',
-    paddingLeft: '0.5em',
-    paddingRight: '0.5em'
+    textAlignVertical: 'top'
   }
 });
