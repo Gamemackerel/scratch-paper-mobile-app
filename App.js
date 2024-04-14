@@ -1,4 +1,4 @@
-import JotView from "./JotView";
+import JotView from "./src/components/JotView";
 
 export default function App() {
 
