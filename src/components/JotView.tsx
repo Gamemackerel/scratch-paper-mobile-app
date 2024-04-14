@@ -1,13 +1,20 @@
 import Constants from 'expo-constants';
 import { StyleSheet, TextInput, Dimensions, SafeAreaView, ScrollView } from 'react-native';
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import * as NoteProcessing from '../utils/NoteProcessing';
 
 const windowDimensions = Dimensions.get('window');
 
 export default function JotView() {
 
-  const [content, setContent] = useState("");
+  // TODO use useEffect for openNote such that it is only opened once on first render.
+  const [content, setContent] = useState(NoteProcessing.openNote());
   const [dimensions, setDimensions] = useState(windowDimensions);
+  
+  const handleInputChange = useCallback((e: string) => {                                                      
+       NoteProcessing.changeNote(e)
+       setContent(e)                                                                    
+   }, []);                                                                                             
 
   useEffect(() => {
     const subscription = Dimensions.addEventListener(
@@ -29,7 +36,7 @@ export default function JotView() {
             placeholder={ 'hello world '}
             multiline
             value={content} 
-            onChangeText={setContent}
+            onChangeText={handleInputChange}
         /></ScrollView>
       </SafeAreaView>
   );
