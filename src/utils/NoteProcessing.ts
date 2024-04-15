@@ -18,19 +18,19 @@ function updateNote(content: string): void {
   processReminders(content);
 }
 
-export function useDebouncedNoteProcessing(): Function {
-  const timeoutRef = useRef(null);                                                                  
-  const delay = 2000;                                                                                
-                                                                                                    
-  const updateNoteDebounced = (content: string): void => {                  
+export function useDebouncedUpdateNote(): Function {
+  const timeoutRef = useRef(null);
+  const delay = 2000;
+
+  const updateNoteDebounced = (content: string): void => {
     console.log('Note requested update');
-                                      
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);                                       
-                                                                                                    
+
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
     timeoutRef.current = setTimeout(() => {
-      updateNote(content);                                                     
-    }, delay);                                                                                      
-  };                                                                                                
-                                                                                                    
+      updateNote(content);
+    }, delay);
+  };
+
   return updateNoteDebounced;
 }

@@ -1,5 +1,4 @@
 import * as FileSystem from 'expo-file-system';
-import { useRef } from 'react';                                                                     
 
 const FILE_PATH = FileSystem.documentDirectory + 'jotooStorage.txt'
 
@@ -8,5 +7,5 @@ export async function saveNoteAsync(content: string): Promise<void> {
 }
 
 export async function loadNoteAsync(): Promise<string> {
-  return FileSystem.readAsStringAsync(FILE_PATH); 
+  return FileSystem.readAsStringAsync(FILE_PATH);
 }

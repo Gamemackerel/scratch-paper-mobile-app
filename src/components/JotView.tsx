@@ -6,22 +6,28 @@ import * as NoteProcessing from '../utils/NoteProcessing';
 const windowDimensions = Dimensions.get('window');
 
 export default function JotView() {
-
   const [loading, setLoading] = useState(true);
   const [dimensions, setDimensions] = useState(windowDimensions);
   const [content, setContent] = useState('');
 
   // Saves the note to storage and processes changes
-  const updateNoteDebounced = NoteProcessing.useDebouncedNoteProcessing();
+  const updateNoteDebounced = NoteProcessing.useDebouncedUpdateNote();
 
-  // initial one-time startup on component mount
+  const handleInputChange = useCallback((e: string) => {
+    if (!loading) {
+      updateNoteDebounced(e)
+      setContent(e)
+    }
+  }, [loading]);
+
+  // Initial one-time startup on component mount
   useEffect(() => {
     // load initial content to textBox
     NoteProcessing.openNote().then((loadedContent) => {
       setContent(loadedContent);
       setLoading(false);
     })
-    
+
     // subscribe to dimensions
     const dimensionsSubscription = Dimensions.addEventListener(
       'change',
@@ -35,24 +41,17 @@ export default function JotView() {
       dimensionsSubscription?.remove()
     };
   }, []);
-                                                                                       
-  const handleInputChange = useCallback((e: string) => {
-    if (!loading) {
-      updateNoteDebounced(e)
-      setContent(e)
-    }                                                                   
-  }, [loading]);
 
   return (
       <SafeAreaView
         style={styles.container}
       >
         <ScrollView>
-        <TextInput 
+        <TextInput
             style={[styles.contentInput, {height: dimensions.height, width: dimensions.width}]}
-            placeholder={ 'hello world' }
+            placeholder={ 'start typing...' }
             multiline
-            value={content} 
+            value={content}
             onChangeText={handleInputChange}
         /></ScrollView>
       </SafeAreaView>
@@ -61,7 +60,7 @@ export default function JotView() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,                                                                                          
+    flex: 1,
     paddingTop: Constants.statusBarHeight,
     paddingLeft: 5,
     paddingRight: 5,
