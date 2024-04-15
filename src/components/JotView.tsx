@@ -1,30 +1,47 @@
 import Constants from 'expo-constants';
 import { StyleSheet, TextInput, Dimensions, SafeAreaView, ScrollView } from 'react-native';
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from 'react';
 import * as NoteProcessing from '../utils/NoteProcessing';
 
 const windowDimensions = Dimensions.get('window');
 
 export default function JotView() {
 
-  // TODO use useEffect for openNote such that it is only opened once on first render.
-  const [content, setContent] = useState(NoteProcessing.openNote());
+  const [loading, setLoading] = useState(true);
   const [dimensions, setDimensions] = useState(windowDimensions);
-  
-  const handleInputChange = useCallback((e: string) => {                                                      
-       NoteProcessing.changeNote(e)
-       setContent(e)                                                                    
-   }, []);                                                                                             
+  const [content, setContent] = useState('');
 
+  // Saves the note to storage and processes changes
+  const updateNoteDebounced = NoteProcessing.useDebouncedNoteProcessing();
+
+  // initial one-time startup on component mount
   useEffect(() => {
-    const subscription = Dimensions.addEventListener(
+    // load initial content to textBox
+    NoteProcessing.openNote().then((loadedContent) => {
+      setContent(loadedContent);
+      setLoading(false);
+    })
+    
+    // subscribe to dimensions
+    const dimensionsSubscription = Dimensions.addEventListener(
       'change',
       ({window}) => {
         setDimensions(window);
       },
     );
-    return () => subscription?.remove();
-  });
+
+    // final cleanup on component dismount
+    return () => {
+      dimensionsSubscription?.remove()
+    };
+  }, []);
+                                                                                       
+  const handleInputChange = useCallback((e: string) => {
+    if (!loading) {
+      updateNoteDebounced(e)
+      setContent(e)
+    }                                                                   
+  }, [loading]);
 
   return (
       <SafeAreaView
@@ -33,7 +50,7 @@ export default function JotView() {
         <ScrollView>
         <TextInput 
             style={[styles.contentInput, {height: dimensions.height, width: dimensions.width}]}
-            placeholder={ 'hello world '}
+            placeholder={ 'hello world' }
             multiline
             value={content} 
             onChangeText={handleInputChange}

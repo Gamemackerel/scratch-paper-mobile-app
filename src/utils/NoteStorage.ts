@@ -1,15 +1,12 @@
 import * as FileSystem from 'expo-file-system';
+import { useRef } from 'react';                                                                     
 
-export function saveNote(content: string): void {
-  // This is a placeholder function
-  // FileSystem.writeAsStringAsync(fileUri, contents, options)
-  console.log('saving');
+const FILE_PATH = FileSystem.documentDirectory + 'jotooStorage.txt'
+
+export async function saveNoteAsync(content: string): Promise<void> {
+  return FileSystem.writeAsStringAsync(FILE_PATH, content)
 }
 
-export function loadNote(): string {
-  // This is a placeholder function
-  // FileSystem.getContentUriAsync(fileUri)
-  console.log('loading')
-  return 'content'
+export async function loadNoteAsync(): Promise<string> {
+  return FileSystem.readAsStringAsync(FILE_PATH); 
 }
-

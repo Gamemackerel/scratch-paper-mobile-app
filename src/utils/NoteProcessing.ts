@@ -1,19 +1,36 @@
 import * as NoteStorage from "./NoteStorage";
+import { useRef } from "react";
 
-
-export function openNote(): string {
-    console.log('Note Opened');
-    const content = NoteStorage.loadNote();
-    processReminders(content)
-    return content
+export function openNote(): Promise<string> {
+  console.log('Note Opened');
+  const contentPromise = NoteStorage.loadNoteAsync();
+  contentPromise.then((content) => processReminders(content))
+  return contentPromise;
 }
 
-
-export function changeNote(content: string): void {
-    console.log('Note Changed');
-    NoteStorage.saveNote(content);
+function processReminders(content: string) {
+  console.log('Scanning for reminders');
 }
 
-export function processReminders(content: string) {
-    console.log('Scanning for reminders');
+function updateNote(content: string): void {
+  console.log('Note updated');
+  NoteStorage.saveNoteAsync(content);
+  processReminders(content);
+}
+
+export function useDebouncedNoteProcessing(): Function {
+  const timeoutRef = useRef(null);                                                                  
+  const delay = 2000;                                                                                
+                                                                                                    
+  const updateNoteDebounced = (content: string): void => {                  
+    console.log('Note requested update');
+                                      
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);                                       
+                                                                                                    
+    timeoutRef.current = setTimeout(() => {
+      updateNote(content);                                                     
+    }, delay);                                                                                      
+  };                                                                                                
+                                                                                                    
+  return updateNoteDebounced;
 }
