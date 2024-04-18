@@ -9,7 +9,10 @@ export function openNote(): Promise<string> {
 }
 
 function processReminders(content: string) {
-  console.log('Scanning for reminders');
+  console.log('processing reminders');
+  const lines = content.split('\n');
+  const reminders = lines.filter(line => line.startsWith('--')).map(line => line.substring(2).trim());
+  console.log(reminders);
 }
 
 function updateNote(content: string): void {
