@@ -1,6 +1,7 @@
 import Constants from 'expo-constants';
-import { AppState, StyleSheet, TextInput, Dimensions, SafeAreaView, ScrollView } from 'react-native';
+import { AppState, StyleSheet, Dimensions, SafeAreaView, ScrollView } from 'react-native';
 import React, { useState, useEffect, useCallback } from 'react';
+import { GestureDetector, Gesture, TextInput } from 'react-native-gesture-handler';
 import * as NoteProcessing from '../utils/NoteProcessing';
 
 const windowDimensions = Dimensions.get('window');
@@ -10,7 +11,7 @@ export default function JotView() {
   const [dimensions, setDimensions] = useState(windowDimensions);
   const [content, setContent] = useState('');
   const [appstate, setAppstate] = useState('active');
-  const parseAndSaveNoteDebounced = NoteProcessing.useDebouncedParseAndSave();
+  const parseAndSaveNoteDebounced = NoteProcessing.useDebouncedParseAndSave(750);
 
   const handleInputChange = useCallback((e: string) => {
     if (!loading) {
@@ -23,7 +24,7 @@ export default function JotView() {
     NoteProcessing.openAndParseNote().then((loadedContent) => {
       setContent(loadedContent);
       setLoading(false);
-    })
+    });
 
     const dimensionsSubscription = Dimensions.addEventListener(
       'change',
@@ -44,30 +45,38 @@ export default function JotView() {
     if (!loading) {
       NoteProcessing.parseAndSaveNote(content);
     }
-  }, [appstate, loading])
+  }, [appstate, loading]);
+
+  const tap = Gesture.Tap()
+    .numberOfTaps(5)
+    .maxDuration(250)
+    .onStart(() => {
+      handleInputChange("");
+    });
 
   return (
+    <GestureDetector gesture={tap}>
       <SafeAreaView
         style={styles.container}
       >
         <ScrollView>
-        <TextInput
-            style={[styles.contentInput, {height: dimensions.height, width: dimensions.width}]}
-            placeholder={
+          <TextInput
+              style={[styles.contentInput, {height: dimensions.height, width: dimensions.width}]}
+              placeholder={
 `Start typing...
 
   Tips:
     Begin a line with -- to make a reminder
     Tap 5 quickly times to clear
-    Two finger tap to preview an AI suggestion
-    Swipe right to confirm suggestion
-`
-            }
-            multiline
-            value={content}
-            onChangeText={handleInputChange}
-        /></ScrollView>
+    `
+              }
+              multiline
+              value={content}
+              onChangeText={handleInputChange}
+          />
+        </ScrollView>
       </SafeAreaView>
+    </GestureDetector>
   );
 }
 

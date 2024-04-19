@@ -52,10 +52,8 @@ export function parseAndSaveNote(content: string): void {
   ]).catch((error) => Alert.alert("There was an error processing your note", error))
 }
 
-export function useDebouncedParseAndSave(): Function {
+export function useDebouncedParseAndSave(delay: number): Function {
   const timeoutRef = useRef(null);
-  const delay = 2000;
-
   const parseAndSaveNoteDebounced = (content: string): void => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
 

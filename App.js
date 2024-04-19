@@ -1,5 +1,5 @@
 import JotView from "./src/components/JotView";
-
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as Notifications from "expo-notifications";
 
 Notifications.setNotificationHandler({
@@ -12,6 +12,8 @@ Notifications.setNotificationHandler({
 
 export default function App() {
   return (
-    <JotView/>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <JotView/>
+    </GestureHandlerRootView>
   );
 }

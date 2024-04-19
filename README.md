@@ -6,5 +6,5 @@ This is an expo app, start a development server with `npx expo start`
 
 
 ## TODO
-* Gestures for delete, copy
-* AI autocomplete
+* Two finger tap to preview an AI "autocomplete" suggestion
+* Swipe right to confirm suggestion
