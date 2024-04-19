@@ -7,5 +7,11 @@ export async function saveNoteAsync(content: string): Promise<void> {
 }
 
 export async function loadNoteAsync(): Promise<string> {
-  return FileSystem.readAsStringAsync(FILE_PATH);
-}
+  return FileSystem.getInfoAsync(FILE_PATH).then((fileInfo) => {
+    if (fileInfo.exists) {
+      return FileSystem.readAsStringAsync(FILE_PATH);
+    } else {
+      return FileSystem.writeAsStringAsync(FILE_PATH, "").then(() => "");
+    }
+  })
+  }

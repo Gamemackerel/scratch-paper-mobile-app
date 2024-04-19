@@ -1,7 +1,7 @@
 import Constants from 'expo-constants';
-import { AppState, StyleSheet, Dimensions, SafeAreaView, ScrollView } from 'react-native';
+import { AppState, StyleSheet, Dimensions, SafeAreaView } from 'react-native';
 import React, { useState, useEffect, useCallback } from 'react';
-import { GestureDetector, Gesture, TextInput } from 'react-native-gesture-handler';
+import { GestureDetector, Gesture, TextInput, ScrollView } from 'react-native-gesture-handler';
 import * as NoteProcessing from '../utils/NoteProcessing';
 
 const windowDimensions = Dimensions.get('window');
