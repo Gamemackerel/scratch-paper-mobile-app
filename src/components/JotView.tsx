@@ -9,17 +9,18 @@ export default function JotView() {
   const [loading, setLoading] = useState(true);
   const [dimensions, setDimensions] = useState(windowDimensions);
   const [content, setContent] = useState('');
-  const saveNoteAndProcessRemindersDebounced = NoteProcessing.useDebouncedUpdateNote();
+  const [appstate, setAppstate] = useState('active');
+  const parseAndSaveNoteDebounced = NoteProcessing.useDebouncedParseAndSave();
 
   const handleInputChange = useCallback((e: string) => {
     if (!loading) {
-      saveNoteAndProcessRemindersDebounced(e)
+      parseAndSaveNoteDebounced(e)
       setContent(e)
     }
   }, [loading]);
 
   useEffect(() => {
-    NoteProcessing.openNote().then((loadedContent) => {
+    NoteProcessing.openAndParseNote().then((loadedContent) => {
       setContent(loadedContent);
       setLoading(false);
     })
@@ -31,17 +32,19 @@ export default function JotView() {
       },
     );
 
-    const appStateSubscription = AppState.addEventListener('change', nextAppState => {
-      if (nextAppState === 'active') {
-        NoteProcessing.processReminders(content);
-      }
-    });
+    const appStateSubscription = AppState.addEventListener('change', setAppstate);
 
     return () => {
       dimensionsSubscription?.remove();
       appStateSubscription?.remove();
     };
   }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      NoteProcessing.parseAndSaveNote(content);
+    }
+  }, [appstate, loading])
 
   return (
       <SafeAreaView
@@ -50,14 +53,16 @@ export default function JotView() {
         <ScrollView>
         <TextInput
             style={[styles.contentInput, {height: dimensions.height, width: dimensions.width}]}
-            placeholder={ `Start typing...
+            placeholder={
+`Start typing...
 
   Tips:
     Begin a line with -- to make a reminder
     Tap 5 quickly times to clear
     Two finger tap to preview an AI suggestion
     Swipe right to confirm suggestion
-            ` }
+`
+            }
             multiline
             value={content}
             onChangeText={handleInputChange}
