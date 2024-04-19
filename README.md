@@ -6,6 +6,6 @@ This is an expo app, start a development server with `npx expo start`
 
 
 ## TODO
-* Add push notifications (https://blog.logrocket.com/react-native-push-notifications-complete-guide/)
+* Remove notification if deleted in app
 * Gestures for delete, copy
 * AI autocomplete

@@ -1,5 +1,20 @@
 import * as NoteStorage from "./NoteStorage";
 import { useRef } from "react";
+import * as Notifications from "expo-notifications";
+
+
+
+
+async function generateReminderNotificationAsync(reminder: string): Promise<string> {
+    return Notifications.scheduleNotificationAsync({
+    content: {
+      title: reminder,
+      body: null
+    },
+    trigger: null,
+    identifier: reminder
+  });
+};
 
 export function openNote(): Promise<string> {
   console.log('Note Opened');
@@ -8,11 +23,13 @@ export function openNote(): Promise<string> {
   return contentPromise;
 }
 
-function processReminders(content: string) {
+export function processReminders(content: string) {
   console.log('processing reminders');
   const lines = content.split('\n');
   const reminders = lines.filter(line => line.startsWith('--')).map(line => line.substring(2).trim());
-  console.log(reminders);
+  reminders.forEach(reminder => {
+    generateReminderNotificationAsync(reminder);
+  });
 }
 
 function updateNote(content: string): void {

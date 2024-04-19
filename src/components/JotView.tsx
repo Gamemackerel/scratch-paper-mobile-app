@@ -1,5 +1,5 @@
 import Constants from 'expo-constants';
-import { StyleSheet, TextInput, Dimensions, SafeAreaView, ScrollView } from 'react-native';
+import { AppState, StyleSheet, TextInput, Dimensions, SafeAreaView, ScrollView } from 'react-native';
 import React, { useState, useEffect, useCallback } from 'react';
 import * as NoteProcessing from '../utils/NoteProcessing';
 
@@ -9,26 +9,21 @@ export default function JotView() {
   const [loading, setLoading] = useState(true);
   const [dimensions, setDimensions] = useState(windowDimensions);
   const [content, setContent] = useState('');
-
-  // Saves the note to storage and processes changes
-  const updateNoteDebounced = NoteProcessing.useDebouncedUpdateNote();
+  const saveNoteAndProcessRemindersDebounced = NoteProcessing.useDebouncedUpdateNote();
 
   const handleInputChange = useCallback((e: string) => {
     if (!loading) {
-      updateNoteDebounced(e)
+      saveNoteAndProcessRemindersDebounced(e)
       setContent(e)
     }
   }, [loading]);
 
-  // Initial one-time startup on component mount
   useEffect(() => {
-    // load initial content to textBox
     NoteProcessing.openNote().then((loadedContent) => {
       setContent(loadedContent);
       setLoading(false);
     })
 
-    // subscribe to dimensions
     const dimensionsSubscription = Dimensions.addEventListener(
       'change',
       ({window}) => {
@@ -36,9 +31,15 @@ export default function JotView() {
       },
     );
 
-    // final cleanup on component dismount
+    const appStateSubscription = AppState.addEventListener('change', nextAppState => {
+      if (nextAppState === 'active') {
+        NoteProcessing.processReminders(content);
+      }
+    });
+
     return () => {
-      dimensionsSubscription?.remove()
+      dimensionsSubscription?.remove();
+      appStateSubscription?.remove();
     };
   }, []);
 
@@ -49,7 +50,14 @@ export default function JotView() {
         <ScrollView>
         <TextInput
             style={[styles.contentInput, {height: dimensions.height, width: dimensions.width}]}
-            placeholder={ 'start typing...' }
+            placeholder={ `Start typing...
+
+  Tips:
+    Begin a line with -- to make a reminder
+    Tap 5 quickly times to clear
+    Two finger tap to preview an AI suggestion
+    Swipe right to confirm suggestion
+            ` }
             multiline
             value={content}
             onChangeText={handleInputChange}
