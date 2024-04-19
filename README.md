@@ -8,3 +8,7 @@ This is an expo app, start a development server with `npx expo start`
 ## TODO
 * Two finger tap to preview an AI "autocomplete" suggestion
 * Swipe right to confirm suggestion
+
+* IOS:
+    * Gesture TextInput doesnt work
+    * Notification doesn't appear
