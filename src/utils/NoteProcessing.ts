@@ -4,17 +4,26 @@ import * as Notifications from "expo-notifications";
 import { Alert } from "react-native";
 
 async function setReminderNotificationsAsync(reminders: string[]): Promise<string[]> {
-  const scheduledNotificationPromises = reminders.map(reminder => {
-    return Notifications.scheduleNotificationAsync({
-      content: {
-        title: reminder,
-        body: null
-      },
-      trigger: null,
-      identifier: reminder
-    });
-  })
-  return Promise.all(scheduledNotificationPromises);
+  return Notifications.getPresentedNotificationsAsync().then(
+    (notifications) => {
+    const notificationIds = notifications.map((notification) => notification.request.identifier);
+    return Promise.all(
+      reminders.map(reminder => {
+        if (!notificationIds.includes(reminder)) {
+          return Notifications.scheduleNotificationAsync({
+            content: {
+              title: reminder,
+              body: null
+            },
+            trigger: null,
+            identifier: reminder
+          });
+        } else {
+          return reminder;
+        }
+      })
+    );
+  });
 };
 
 async function removeExtinctNotificationsAsync(reminders: string[]): Promise<void[]> {

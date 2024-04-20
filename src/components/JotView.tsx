@@ -3,6 +3,7 @@ import { AppState, StyleSheet, Dimensions, SafeAreaView } from 'react-native';
 import React, { useState, useEffect, useCallback } from 'react';
 import { GestureDetector, Gesture, TextInput, ScrollView } from 'react-native-gesture-handler';
 import * as NoteProcessing from '../utils/NoteProcessing';
+import * as Notifications from 'expo-notifications';
 
 const windowDimensions = Dimensions.get('window');
 
@@ -21,6 +22,15 @@ export default function JotView() {
   }, [loading]);
 
   useEffect(() => {
+    Notifications.requestPermissionsAsync({
+      ios: {
+        allowAlert: true,
+        allowBadge: true,
+        allowSound: false,
+        allowAnnouncements: false,
+      },
+    });
+
     NoteProcessing.openAndParseNote().then((loadedContent) => {
       setContent(loadedContent);
       setLoading(false);
