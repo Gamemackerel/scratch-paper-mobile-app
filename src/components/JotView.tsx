@@ -57,36 +57,37 @@ export default function JotView() {
     }
   }, [appstate, loading]);
 
-  const tap = Gesture.Tap()
+  const fiveTapToDelete = Gesture.Tap()
     .numberOfTaps(5)
     .maxDuration(250)
     .onStart(() => {
+      console.log('tapped!');
       handleInputChange("");
     });
 
   return (
-    <GestureDetector gesture={tap}>
-      <SafeAreaView
-        style={styles.container}
+    <SafeAreaView
+      style={styles.container}
       >
+      <GestureDetector gesture={fiveTapToDelete}>
         <ScrollView>
-          <TextInput
-              style={[styles.contentInput, {height: dimensions.height, width: dimensions.width}]}
-              placeholder={
-`Start typing...
+            <TextInput
+                style={[styles.contentInput, {height: dimensions.height, width: dimensions.width}]}
+                placeholder={
+  `Start typing...
 
-  Tips:
-    Begin a line with + to make a reminder
-    Tap 5 quickly times to clear
-    `
-              }
-              multiline
-              value={content}
-              onChangeText={handleInputChange}
-          />
+    Tips:
+      Begin a line with + to make a reminder
+      Tap 5 quickly times to clear
+      `
+                }
+                multiline
+                value={content}
+                onChangeText={handleInputChange}
+            />
         </ScrollView>
-      </SafeAreaView>
-    </GestureDetector>
+      </GestureDetector>
+    </SafeAreaView>
   );
 }
 

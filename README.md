@@ -10,5 +10,6 @@ This is an expo app, start a development server with `npx expo start`
 * Swipe right to confirm suggestion
 
 * IOS:
-    * Gesture TextInput doesnt work
-    * Notification doesn't appear
+    * Gesturing on TextInput/Scrollview doesnt work, even when using TextInput Gesture
+        * Currently have a potential fix in for this
+        * would be good to test in isolation and try and see what Gesture.Native() does.
