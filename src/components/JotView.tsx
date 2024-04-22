@@ -1,9 +1,10 @@
 import Constants from 'expo-constants';
-import { AppState, StyleSheet, Dimensions, SafeAreaView } from 'react-native';
+import { AppState, StyleSheet, Dimensions, SafeAreaView, useColorScheme, View } from 'react-native';
 import React, { useState, useEffect, useCallback } from 'react';
 import { GestureDetector, Gesture, TextInput, ScrollView } from 'react-native-gesture-handler';
 import * as NoteProcessing from '../utils/NoteProcessing';
 import * as Notifications from 'expo-notifications';
+
 
 const windowDimensions = Dimensions.get('window');
 
@@ -12,6 +13,7 @@ export default function JotView() {
   const [dimensions, setDimensions] = useState(windowDimensions);
   const [content, setContent] = useState('');
   const [appstate, setAppstate] = useState('active');
+  const colorScheme = useColorScheme();
   const parseAndSaveNoteDebounced = NoteProcessing.useDebouncedParseAndSave(750);
 
   const handleInputChange = useCallback((e: string) => {
@@ -66,28 +68,33 @@ export default function JotView() {
     });
 
   return (
-    <SafeAreaView
-      style={styles.container}
-      >
-      <GestureDetector gesture={fiveTapToDelete}>
-        <ScrollView>
-            <TextInput
-                style={[styles.contentInput, {height: dimensions.height, width: dimensions.width}]}
-                placeholder={
-  `Start typing...
+    <View style={[{flex: 1},  colorScheme === 'dark' ? styles.dark : styles.light ]}>
+      <SafeAreaView
+        style={[styles.container]}
+        >
+        <GestureDetector gesture={fiveTapToDelete}>
+          <ScrollView>
+              <TextInput
+                  style={[styles.contentInput, {height: dimensions.height, width: dimensions.width},
+                    colorScheme === 'dark' ? styles.dark : styles.light
+                  ]}
+                  placeholder={
+    `Start typing...
 
-    Tips:
-      Begin a line with + to make a reminder
-      Tap 5 quickly times to clear
-      `
-                }
-                multiline
-                value={content}
-                onChangeText={handleInputChange}
-            />
-        </ScrollView>
-      </GestureDetector>
-    </SafeAreaView>
+      Tips:
+        Begin a line with + to make a reminder
+        Tap 5 quickly times to clear
+
+        ` + colorScheme
+                  }
+                  multiline
+                  value={content}
+                  onChangeText={handleInputChange}
+              />
+          </ScrollView>
+        </GestureDetector>
+      </SafeAreaView>
+    </View>
   );
 }
 
@@ -101,5 +108,17 @@ const styles = StyleSheet.create({
 
   contentInput: {
     textAlignVertical: 'top'
-  }
+  },
+
+  light: {
+    color: '#0F4C5C',
+    // secondaryColor: '#FF6B6B',
+    backgroundColor: '#F6F6F6',
+  },
+
+  dark: {
+     color: '#CDD4DE',
+    //  secondaryColor: '#134074',
+     backgroundColor: '#101829',
+   }
 });
