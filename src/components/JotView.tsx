@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { GestureDetector, Gesture, TextInput, ScrollView } from 'react-native-gesture-handler';
 import * as NoteProcessing from '../utils/NoteProcessing';
 import * as Notifications from 'expo-notifications';
+import { Colors } from '../constants/Colors';
 
 
 const windowDimensions = Dimensions.get('window');
@@ -87,6 +88,7 @@ export default function JotView() {
 
         ` + colorScheme
                   }
+                  placeholderTextColor={colorScheme === 'dark' ? Colors.dark.secondaryText: Colors.light.secondaryText}
                   multiline
                   value={content}
                   onChangeText={handleInputChange}
@@ -109,16 +111,12 @@ const styles = StyleSheet.create({
   contentInput: {
     textAlignVertical: 'top'
   },
-
   light: {
-    color: '#0F4C5C',
-    // secondaryColor: '#FF6B6B',
-    backgroundColor: '#F6F6F6',
+    color: Colors.light.text,
+    backgroundColor: Colors.light.background,
   },
-
   dark: {
-     color: '#CDD4DE',
-    //  secondaryColor: '#134074',
-     backgroundColor: '#101829',
-   }
+    color: Colors.dark.text,
+    backgroundColor: Colors.dark.background,
+  },
 });
