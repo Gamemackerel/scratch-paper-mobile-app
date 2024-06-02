@@ -13,7 +13,6 @@ async function setReminderNotificationsAsync(reminders: string[]): Promise<strin
           return Notifications.scheduleNotificationAsync({
             content: {
               title: reminder,
-              body: null
             },
             trigger: null,
             identifier: reminder
