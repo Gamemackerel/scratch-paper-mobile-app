@@ -61,7 +61,7 @@ export default function JotView() {
   }, [appstate, loading]);
 
   const fiveTapToDelete = Gesture.Tap()
-    .numberOfTaps(5)
+    .numberOfTaps(8)
     .maxDuration(250)
     .onStart(() => {
       console.log('tapped!');
@@ -84,9 +84,8 @@ export default function JotView() {
 
       Tips:
         Begin a line with + to make a reminder
-        Tap 5 quickly times to clear
-
-        ` + colorScheme
+        Tap 8 quickly times to clear
+`
                   }
                   placeholderTextColor={colorScheme === 'dark' ? Colors.dark.secondaryText: Colors.light.secondaryText}
                   multiline
