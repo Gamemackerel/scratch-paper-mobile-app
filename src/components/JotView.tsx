@@ -83,7 +83,7 @@ export default function JotView() {
     `Start typing...
 
       Tips:
-        Begin a line with + to make a reminder
+        Begin a line with :: to make a reminder
         Tap 8 quickly times to clear
 `
                   }

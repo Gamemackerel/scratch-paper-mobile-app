@@ -40,7 +40,7 @@ async function removeExtinctNotificationsAsync(reminders: string[]): Promise<voi
 
 export async function parseRemindersAsync(content: string): Promise<string[]> {
   const lines = content.split('\n');
-  const reminders = lines.filter(line => line.startsWith('+')).map(line => line.substring(1).trim());
+  const reminders = lines.filter(line => line.startsWith('::')).map(line => line.substring(2).trim());
   removeExtinctNotificationsAsync(reminders)
   return setReminderNotificationsAsync(reminders);
 }

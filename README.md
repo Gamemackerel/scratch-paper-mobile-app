@@ -13,8 +13,6 @@ This is an expo app, start a development server with `npx expo start`
         * Currently have a potential untested fix in for this
         * would be good to test in isolation and try and see what Gesture.Native() does. But I currently do not have an iphone to iteratively debug with.
 
-* fix first time file load bug
-
 * Build and release on ios store and google store
 
 ### Future work
