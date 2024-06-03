@@ -9,9 +9,7 @@ This is an expo app, start a development server with `npx expo start`
 * Ensure cursor starts at the bottom
 
 * IOS:
-    * Gesturing on TextInput/Scrollview doesnt work, even when using TextInput from Gesture package
-        * Currently have a potential untested fix in for this
-        * would be good to test in isolation and try and see what Gesture.Native() does. But I currently do not have an iphone to iteratively debug with.
+    * auto text scrolling when typing doesnt seem to work
 
 * Build and release on ios store and google store
 

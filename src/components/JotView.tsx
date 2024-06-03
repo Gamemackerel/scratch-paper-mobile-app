@@ -1,7 +1,7 @@
 import Constants from 'expo-constants';
-import { AppState, StyleSheet, Dimensions, SafeAreaView, useColorScheme, View } from 'react-native';
+import { AppState, StyleSheet, Dimensions, SafeAreaView, useColorScheme, View, TextInput, ScrollView } from 'react-native';
 import React, { useState, useEffect, useCallback } from 'react';
-import { GestureDetector, Gesture, TextInput, ScrollView } from 'react-native-gesture-handler';
+import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import * as NoteProcessing from '../utils/NoteProcessing';
 import * as Notifications from 'expo-notifications';
 import { Colors } from '../constants/Colors';
@@ -68,6 +68,12 @@ export default function JotView() {
       handleInputChange("");
     });
 
+  // This allows the fiveTapGesture to coexist with the
+  // native TextInput gestures, but it doesn't automatically
+  // compose them (fivetap still needs to be detected)
+  const nativeTextInput = Gesture.Native();
+  nativeTextInput.simultaneousWithExternalGesture(fiveTapToDelete);
+
   return (
     <View style={[{flex: 1},  colorScheme === 'dark' ? styles.dark : styles.light ]}>
       <SafeAreaView
@@ -75,6 +81,7 @@ export default function JotView() {
         >
         <GestureDetector gesture={fiveTapToDelete}>
           <ScrollView>
+              <GestureDetector gesture={nativeTextInput}>
               <TextInput
                   style={[styles.contentInput, {height: dimensions.height, width: dimensions.width},
                     colorScheme === 'dark' ? styles.dark : styles.light
@@ -92,6 +99,7 @@ export default function JotView() {
                   value={content}
                   onChangeText={handleInputChange}
               />
+              </GestureDetector>
           </ScrollView>
         </GestureDetector>
       </SafeAreaView>
