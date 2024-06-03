@@ -1,5 +1,5 @@
 import Constants from 'expo-constants';
-import { AppState, StyleSheet, Dimensions, SafeAreaView, useColorScheme, View, TextInput, ScrollView } from 'react-native';
+import { AppState, StyleSheet, Dimensions, SafeAreaView, useColorScheme, View, TextInput, ScrollView, KeyboardAvoidingView } from 'react-native';
 import React, { useState, useEffect, useCallback } from 'react';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import * as NoteProcessing from '../utils/NoteProcessing';
@@ -79,29 +79,31 @@ export default function JotView() {
       <SafeAreaView
         style={[styles.container]}
         >
-        <GestureDetector gesture={fiveTapToDelete}>
-          <ScrollView>
-              <GestureDetector gesture={nativeTextInput}>
-              <TextInput
-                  style={[styles.contentInput, {height: dimensions.height, width: dimensions.width},
-                    colorScheme === 'dark' ? styles.dark : styles.light
-                  ]}
-                  placeholder={
-    `Start typing...
+        <KeyboardAvoidingView>
+          <GestureDetector gesture={fiveTapToDelete}>
+            <ScrollView>
+                <GestureDetector gesture={nativeTextInput}>
+                <TextInput
+                    style={[styles.contentInput, {height: dimensions.height, width: dimensions.width},
+                      colorScheme === 'dark' ? styles.dark : styles.light
+                    ]}
+                    placeholder={
+      `Start typing...
 
-      Tips:
-        Begin a line with :: to make a reminder
-        Tap 8 quickly times to clear
-`
-                  }
-                  placeholderTextColor={colorScheme === 'dark' ? Colors.dark.secondaryText: Colors.light.secondaryText}
-                  multiline
-                  value={content}
-                  onChangeText={handleInputChange}
-              />
-              </GestureDetector>
-          </ScrollView>
-        </GestureDetector>
+        Tips:
+          Begin a line with :: to make a reminder
+          Tap 8 quickly times to clear
+  `
+                    }
+                    placeholderTextColor={colorScheme === 'dark' ? Colors.dark.secondaryText: Colors.light.secondaryText}
+                    multiline
+                    value={content}
+                    onChangeText={handleInputChange}
+                />
+                </GestureDetector>
+            </ScrollView>
+          </GestureDetector>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </View>
   );
@@ -112,7 +114,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: Constants.statusBarHeight,
     paddingLeft: 5,
-    paddingRight: 5,
+    paddingRight: 5
   },
 
   contentInput: {

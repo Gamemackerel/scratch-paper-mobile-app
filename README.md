@@ -6,10 +6,6 @@ The successor to the now deprecated [Jot](https://github.com/Gamemackerel/Jot.),
 This is an expo app, start a development server with `npx expo start`
 
 ## TODO
-* Ensure cursor starts at the bottom
-
-* IOS:
-    * auto text scrolling when typing doesnt seem to work
 
 * Build and release on ios store and google store
 
