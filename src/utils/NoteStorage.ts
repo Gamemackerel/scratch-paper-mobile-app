@@ -1,6 +1,6 @@
 import * as FileSystem from 'expo-file-system';
 
-const FILE_PATH = FileSystem.documentDirectory + 'jotooStorage.txt'
+const FILE_PATH = FileSystem.documentDirectory + 'scratch-paper-storage.txt'
 
 export async function saveNoteAsync(content: string): Promise<void> {
   return FileSystem.writeAsStringAsync(FILE_PATH, content);

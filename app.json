@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "jotoo",
-    "slug": "jotoo",
+    "name": "Scratch Paper",
+    "slug": "scratch-paper",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
