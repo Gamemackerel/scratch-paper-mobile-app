@@ -1,4 +1,4 @@
-import JotView from "./src/components/JotView";
+import ScratchPaperNote from "./src/components/ScratchPaperNote";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as Notifications from "expo-notifications";
 
@@ -17,7 +17,7 @@ Notifications.setNotificationHandler({
 export default function App() {
   return (
     <GestureHandlerRootView style={{flex: 1}}>
-      <JotView/>
+      <ScratchPaperNote/>
     </GestureHandlerRootView>
   );
 }
