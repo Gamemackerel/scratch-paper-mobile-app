@@ -1,7 +1,13 @@
 import { SafeAreaView, View, KeyboardAvoidingView, ScrollView } from 'react-native';
-import Styles from '../constants/Styles';
+import { Styles, AutoStyleInfo } from '../constants/Styles';
+import { ReactNode } from 'react';
 
-export default function NoteView({ children, autoStyle }) {
+interface NoteViewProps {
+  children: ReactNode;
+  autoStyle: AutoStyleInfo;
+}
+
+export default function NoteView({ children, autoStyle } : NoteViewProps) {
   return (
     <View style={[Styles.containerView,  autoStyle.colors ]}>
       <SafeAreaView>

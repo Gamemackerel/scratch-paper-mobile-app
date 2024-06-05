@@ -3,6 +3,9 @@ import { useRef } from "react";
 import * as Notifications from "expo-notifications";
 import { Alert } from "react-native";
 
+const DEBOUNCE_DELAY_MS = 750;
+const REMINDER_TOKEN = "!";
+
 async function setReminderNotificationsAsync(reminders: string[]): Promise<string[]> {
   return Notifications.getPresentedNotificationsAsync().then(
     (notifications) => {
@@ -38,11 +41,14 @@ async function removeExtinctNotificationsAsync(reminders: string[]): Promise<voi
   });
 }
 
-export async function parseRemindersAsync(content: string): Promise<string[]> {
+export async function parseRemindersAsync(content: string): Promise<(string[] | void[])[]> {
   const lines = content.split('\n');
-  const reminders = lines.filter(line => line.startsWith('::')).map(line => line.substring(2).trim());
-  removeExtinctNotificationsAsync(reminders)
-  return setReminderNotificationsAsync(reminders);
+  const reminders = lines.filter(line => line.startsWith(REMINDER_TOKEN))
+      .map(line => line.substring(REMINDER_TOKEN.length).trim());
+  return Promise.all([
+    removeExtinctNotificationsAsync(reminders),
+    setReminderNotificationsAsync(reminders)
+  ])
 }
 
 export function openAndParseNote(): Promise<string> {
@@ -59,8 +65,6 @@ export function parseAndSaveNote(content: string): void {
     NoteStorage.saveNoteAsync(content)
   ]).catch((error) => Alert.alert("There was an error processing your note", error))
 }
-
-const DEBOUNCE_DELAY_MS = 750;
 
 export function useDebouncedParseAndSave(): Function {
   const timeoutRef = useRef(null);

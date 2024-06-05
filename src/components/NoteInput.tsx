@@ -1,10 +1,15 @@
 import { TextInput } from 'react-native';
 import React, { useState, useEffect, useCallback } from 'react';
 import * as NoteProcessing from '../utils/NoteProcessing';
-import Styles from '../constants/Styles';
+import { Styles, AutoStyleInfo } from '../constants/Styles';
+import { placeholderText } from '../constants/Strings';
 import NoteGestureManager from './NoteGestureManager';
 
-export default function NoteInput({ autoStyle, appstate }) {
+interface NoteInputProps {
+  autoStyle: AutoStyleInfo;
+  appState: string;
+}
+export default function NoteInput({ autoStyle, appState } : NoteInputProps) {
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState('');
   const parseAndSaveNoteDebounced = NoteProcessing.useDebouncedParseAndSave();
@@ -28,20 +33,13 @@ export default function NoteInput({ autoStyle, appstate }) {
     if (!loading) {
       NoteProcessing.parseAndSaveNote(content);
     }
-  }, [appstate, loading]);
+  }, [appState]);
 
   return (
     <NoteGestureManager updateNote={updateNote}>
       <TextInput
-          style={[Styles.contentInput, autoStyle.colors, autoStyle.dimensions]}
-          placeholder={
-`Start typing...
-
-  Tips:
-    Begin a line with :: to make a reminder
-    Tap 5 quickly times to clear
-`
-        }
+        style={[Styles.contentInput, autoStyle.colors, autoStyle.dimensions]}
+        placeholder={placeholderText}
         placeholderTextColor={autoStyle.placeholderTextColor}
         multiline
         value={content}
