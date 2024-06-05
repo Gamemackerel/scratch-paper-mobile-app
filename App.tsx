@@ -1,14 +1,25 @@
 import { AppState, Dimensions, useColorScheme } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import * as Notifications from 'expo-notifications';
-import NoteView from './NoteView';
-import NoteInput from './NoteInput';
-import { Styles, ThemeColors, AutoStyleInfo } from '../constants/Styles';
+import NoteView from './src/components/NoteView';
+import NoteInput from './src/components/NoteInput';
+import { Styles, ThemeColors, AutoStyleInfo } from './src/constants/Styles';
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => {
+    return (
+      {
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: true,
+      }
+    )
+  },
+});
 
 const initialDimensions = Dimensions.get('window');
 
-export default function ScratchPaperNote() {
+export default function NoteRoot() {
   const [dimensions, setDimensions] = useState(initialDimensions);
   const [appState, setAppstate] = useState('active');
   const colorScheme = useColorScheme();

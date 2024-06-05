@@ -18,8 +18,8 @@ export const Styles = StyleSheet.create({
   containerView: {
     flex: 1,
     paddingTop: Constants.statusBarHeight,
-    paddingLeft: 5,
-    paddingRight: 5
+    paddingLeft: 8,
+    paddingRight: 8
   },
   contentInput: {
     textAlignVertical: 'top'
@@ -35,8 +35,6 @@ export const Styles = StyleSheet.create({
 });
 
 
-// Used to pass certain computed style
-// info down the componenet tree
 export type AutoStyleInfo = {
   colors: {
     color: string;
