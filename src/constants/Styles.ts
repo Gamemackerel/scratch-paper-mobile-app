@@ -3,14 +3,14 @@ import { StyleSheet } from 'react-native';
 
 export const ThemeColors = {
   light: {
-    text: '#11181C',
-    background: '#fff',
-    secondaryText: '#A3A3A3'
+    text: '#5A5A5A',
+    background: '#FBF6F0',
+    secondaryText: '#C0B9B2'
   },
   dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    secondaryText: '#A3A3A3'
+    text: '#F0EDEB',
+    background: '#4B4845',
+    secondaryText: '#C0B9B2'
   },
 };
 
@@ -18,11 +18,12 @@ export const Styles = StyleSheet.create({
   containerView: {
     flex: 1,
     paddingTop: Constants.statusBarHeight,
-    paddingLeft: 8,
-    paddingRight: 8
+    paddingLeft: 10,
+    paddingRight: 10
   },
   contentInput: {
-    textAlignVertical: 'top'
+    textAlignVertical: 'top',
+    fontSize: 16
   },
   light: {
     color: ThemeColors.light.text,

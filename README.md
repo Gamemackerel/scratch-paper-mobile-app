@@ -5,6 +5,8 @@ The successor to the now deprecated [Jot](https://github.com/Gamemackerel/Jot.),
 
 This is an expo app, start a development server with `npx expo start`
 
+Update dependencies by following these [instructions](https://docs.expo.dev/workflow/upgrading-expo-sdk-walkthrough/).
+
 ## TODO
 
 * Build and release on ios store and google store
