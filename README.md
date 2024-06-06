@@ -1,7 +1,7 @@
 # Scratch Paper; single page notes.
 A hyper-minimal 'single-page' notes app, for scratch notes and reminders.
 
-The successor to the now deprecated [Jot](https://github.com/Gamemackerel/Jot.), now multi-platform and built with react native.
+The successor to the now deprecated [Jot](https://github.com/Gamemackerel/Jot.), but multi-platform and built with react native.
 
 This is an expo app, start a development server with `npx expo start`
 
