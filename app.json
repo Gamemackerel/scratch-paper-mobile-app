@@ -2,7 +2,7 @@
   "expo": {
     "name": "Scratch Paper",
     "slug": "scratch-paper",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -15,7 +15,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.abemiller.scratchpaper",
-      "buildNumber": "2"
+      "buildNumber": "3"
     },
     "android": {
       "softwareKeyboardLayoutMode": "pan",
