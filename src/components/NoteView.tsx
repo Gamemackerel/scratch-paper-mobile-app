@@ -2,6 +2,7 @@ import { SafeAreaView, View, KeyboardAvoidingView, ScrollView } from 'react-nati
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Styles, AutoStyleInfo } from '../constants/Styles';
 import { ReactNode } from 'react';
+import { StatusBar } from 'expo-status-bar';
 
 interface NoteViewProps {
   children: ReactNode;
@@ -11,12 +12,11 @@ interface NoteViewProps {
 export default function NoteView({ children, autoStyle } : NoteViewProps) {
   return (
     <GestureHandlerRootView style={{flex: 1}}>
+      <StatusBar/>
       <View style={[Styles.containerView,  autoStyle.colors ]}>
         <SafeAreaView>
           <KeyboardAvoidingView>
-            <ScrollView>
               {children}
-            </ScrollView>
           </KeyboardAvoidingView>
         </SafeAreaView>
       </View>

@@ -38,10 +38,11 @@ export default function NoteInput({ autoStyle, appState } : NoteInputProps) {
   return (
     <NoteGestureManager updateNote={updateNote}>
       <TextInput
-        style={[Styles.contentInput, autoStyle.colors, autoStyle.dimensions]}
+        style={[Styles.contentInput, autoStyle.colors, {minHeight: autoStyle.dimensions.height}]}
         placeholder={placeholderText}
         placeholderTextColor={autoStyle.placeholderTextColor}
         multiline
+        scrollEnabled={false}
         value={content}
         onChangeText={updateNote}
       />
