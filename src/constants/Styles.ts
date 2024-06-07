@@ -19,7 +19,8 @@ export const Styles = StyleSheet.create({
     flex: 1,
     paddingTop: Constants.statusBarHeight,
     paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 10,
+    paddingBottom: 10
   },
   contentInput: {
     textAlignVertical: 'top',

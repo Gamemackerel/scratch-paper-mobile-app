@@ -2,7 +2,7 @@
   "expo": {
     "name": "Scratch Paper",
     "slug": "scratch-paper",
-    "version": "1.0.1",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -14,7 +14,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.abemiller.scratchpaper"
+      "bundleIdentifier": "com.abemiller.scratchpaper",
+      "buildNumber": 2
     },
     "android": {
       "softwareKeyboardLayoutMode": "pan",
@@ -24,20 +25,17 @@
       },
       "useNextNotificationsApi": true,
       "package": "com.abemiller.scratchpaper",
-      "versionCode": 2
+      "versionCode": 4
     },
     "extra": {
       "eas": {
         "projectId": "34132d54-d298-49df-bac7-99f9a817b5e1"
       }
     },
-    "plugins": [
-      [
-        "expo-notifications",
-        {
-          "icon": "./local/assets/notification-icon.png"
-        }
-      ]
-    ]
+    "notification": {
+      "icon": "./assets/notification-icon.png",
+      "color": "#ffffff"
+    }
+
   }
 }

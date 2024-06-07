@@ -1,6 +1,7 @@
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
-import { ScrollView } from 'react-native';
+import { Platform } from 'react-native';
 import { useCallback, ReactNode } from 'react';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 interface NoteGestureManagerProps {
   children: ReactNode;
@@ -15,6 +16,7 @@ export default function NoteGestureManager({ children, updateNote }: NoteGesture
   const fiveTapToClear = Gesture.Tap()
     .numberOfTaps(5)
     .maxDuration(200)
+    .requireExternalGestureToFail(nativeScroll)
     .onStart(clearNote);
 
   // This allows the fiveTapGesture to coexist with the
@@ -23,18 +25,18 @@ export default function NoteGestureManager({ children, updateNote }: NoteGesture
   // Thus we have 3 detectors, one for the custom gestures,
   // one for the scrollView, and one for the textInput
   nativeTextInput.simultaneousWithExternalGesture(fiveTapToClear);
-  nativeScroll.simultaneousWithExternalGesture(nativeScroll);
 
   return (
     <GestureDetector gesture={fiveTapToClear}>
       <GestureDetector gesture={nativeScroll}>
-        <ScrollView
-          keyboardDismissMode='on-drag'
+        <KeyboardAwareScrollView
+          keyboardDismissMode={Platform.OS == 'ios' ? 'interactive' : 'on-drag'}
+          enableOnAndroid={true}
         >
           <GestureDetector gesture={nativeTextInput}>
               { children }
           </GestureDetector>
-        </ScrollView>
+        </KeyboardAwareScrollView>
       </GestureDetector>
     </GestureDetector>
   );

@@ -45,6 +45,7 @@ export default function NoteInput({ autoStyle, appState } : NoteInputProps) {
         scrollEnabled={false}
         value={content}
         onChangeText={updateNote}
+        autoFocus={true}
       />
     </NoteGestureManager>
   );
