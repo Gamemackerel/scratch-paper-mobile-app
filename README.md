@@ -11,6 +11,7 @@ Update dependencies by following these [instructions](https://docs.expo.dev/work
 
 * Build and release on ios store and google store
 * Build new text editor from scratch to be aware of keyboard size and line numbers for full screen text input(KeyboardAwareScrollView is less than perfect)
+* Fix android notification icon (currently it's blank)
 
 ### Future work
 * Add two finger tap to begin dictation

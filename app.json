@@ -15,12 +15,13 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.abemiller.scratchpaper",
-      "buildNumber": 2
+      "buildNumber": "2"
     },
     "android": {
       "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
+        "monochromeImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "useNextNotificationsApi": true,
