@@ -15,8 +15,9 @@ export default function NoteGestureManager({ children, updateNote }: NoteGesture
   const nativeTextInput = Gesture.Native();
   const fiveTapToClear = Gesture.Tap()
     .numberOfTaps(5)
-    .maxDuration(200)
-    .requireExternalGestureToFail(nativeScroll)
+    .maxDuration(250)
+    .maxDeltaY(50)
+    .maxDeltaX(50)
     .onStart(clearNote);
 
   // This allows the fiveTapGesture to coexist with the
@@ -25,6 +26,7 @@ export default function NoteGestureManager({ children, updateNote }: NoteGesture
   // Thus we have 3 detectors, one for the custom gestures,
   // one for the scrollView, and one for the textInput
   nativeTextInput.simultaneousWithExternalGesture(fiveTapToClear);
+  nativeScroll.simultaneousWithExternalGesture(fiveTapToClear);
 
   return (
     <GestureDetector gesture={fiveTapToClear}>
@@ -32,6 +34,7 @@ export default function NoteGestureManager({ children, updateNote }: NoteGesture
         <KeyboardAwareScrollView
           keyboardDismissMode={Platform.OS == 'ios' ? 'interactive' : 'on-drag'}
           enableOnAndroid={true}
+          enableAutomaticScroll={Platform.OS == 'ios' ? true : false}
         >
           <GestureDetector gesture={nativeTextInput}>
               { children }
