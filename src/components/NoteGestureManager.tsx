@@ -29,15 +29,15 @@ export default function NoteGestureManager({ children, updateNote }: NoteGesture
 
   return (
     <GestureDetector gesture={fiveTapToClear}>
-      {/* <GestureDetector gesture={nativeScroll}>
+      <GestureDetector gesture={nativeScroll}>
         <KeyboardAwareScrollView
           bottomOffset={10}
-        > */}
+        >
           <GestureDetector gesture={nativeTextInput}>
               { children }
           </GestureDetector>
-        {/* </KeyboardAwareScrollView>
-      </GestureDetector> */}
+        </KeyboardAwareScrollView>
+      </GestureDetector>
     </GestureDetector>
   );
 }
