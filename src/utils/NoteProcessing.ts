@@ -9,26 +9,27 @@ const REMINDER_TOKEN = "!";
 async function setReminderNotificationsAsync(reminders: string[]): Promise<string[]> {
   return Notifications.getPresentedNotificationsAsync().then(
     (notifications) => {
-    const notificationIds = notifications.map((notification) => notification.request.identifier);
-    return Promise.all(
-      reminders.map(reminder => {
-        if (!notificationIds.includes(reminder)) {
-          return Notifications.scheduleNotificationAsync({
-            content: {
-              title: reminder,
-            },
-            trigger: null,
-            identifier: reminder
-          });
-        } else {
-          return reminder;
-        }
-      })
-    );
-  });
+      const notificationIds = notifications.map((notification) => notification.request.identifier);
+      return Promise.all(
+        reminders.map(reminder => {
+          if (!notificationIds.includes(reminder)) {
+            return Notifications.scheduleNotificationAsync({
+              content: {
+                title: reminder,
+              },
+              trigger: null,
+              identifier: reminder
+            });
+          } else {
+            return reminder;
+          }
+        })
+      );
+    }
+  );
 };
 
-async function removeExtinctNotificationsAsync(reminders: string[]): Promise<void[]> {
+async function removeExtinctNotificationsAsync(reminders: string[]): Promise<(void | null)[]> {
   return Notifications.getPresentedNotificationsAsync().then((notifications) => {
     return Promise.all(
       notifications.map(notification => {
@@ -41,7 +42,7 @@ async function removeExtinctNotificationsAsync(reminders: string[]): Promise<voi
   });
 }
 
-export async function parseRemindersAsync(content: string): Promise<(string[] | void[])[]> {
+async function parseRemindersAsync(content: string): Promise<(string[] | (void | null)[])[]> {
   const lines = content.split('\n');
   const reminders = lines.filter(line => line.startsWith(REMINDER_TOKEN))
       .map(line => line.substring(REMINDER_TOKEN.length).trim());
@@ -63,11 +64,11 @@ export function parseAndSaveNote(content: string): void {
   Promise.all([
     parseRemindersAsync(content),
     NoteStorage.saveNoteAsync(content)
-  ]).catch((error) => Alert.alert("There was an error processing your note", error))
+  ]).catch((error) => Alert.alert("There was an error processing your note", error));
 }
 
-export function useDebouncedParseAndSave(): Function {
-  const timeoutRef = useRef(null);
+export function useDebouncedParseAndSave(): (content: string) => void {
+  const timeoutRef = useRef<null | NodeJS.Timeout>(null);
   const parseAndSaveNoteDebounced = (content: string): void => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
 

@@ -9,11 +9,9 @@ Update dependencies by following these [instructions](https://docs.expo.dev/work
 
 ## TODO
 
-* Build and release on ios store and google store
-* Build new text editor from scratch to be aware of keyboard size and line numbers for full screen text input(KeyboardAwareScrollView is less than perfect)
-* Fix android notification icon (currently it's blank)
+* Build new text editor using react-native-keyboard-controller or scratch keyboard controller. (KeyboardAwareScrollView is less than perfect)
+* Fix android notification icon (it's mysteriously blank)
 
 ### Future work
 * Add two finger tap to begin dictation
 * Swipe left to preview an AI "autocomplete" suggestion, swipe right to confirm suggestion
-* Add shake to search text

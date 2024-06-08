@@ -20,11 +20,6 @@ export default function NoteGestureManager({ children, updateNote }: NoteGesture
     .maxDeltaX(50)
     .onStart(clearNote);
 
-  // This allows the fiveTapGesture to coexist with the
-  // native gestures of the child elements, but it doesn't automatically
-  // compose them (fiveTapToClear still needs its own detector)
-  // Thus we have 3 detectors, one for the custom gestures,
-  // one for the scrollView, and one for the textInput
   nativeTextInput.simultaneousWithExternalGesture(fiveTapToClear);
   nativeScroll.simultaneousWithExternalGesture(fiveTapToClear);
 

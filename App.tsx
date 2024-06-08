@@ -35,12 +35,11 @@ export default function NoteRoot() {
     });
 
     const dimensionsSubscription = Dimensions.addEventListener(
-      'change',
-      ({window}) => {
-        setDimensions(window);
-      },
+      'change', ({window}) => setDimensions(window)
     );
-    const appStateSubscription = AppState.addEventListener('change', setAppstate);
+    const appStateSubscription = AppState.addEventListener(
+      'change', setAppstate
+    );
 
     return () => {
       dimensionsSubscription?.remove();
@@ -50,7 +49,8 @@ export default function NoteRoot() {
 
   const autoStyle : AutoStyleInfo = {
     colors: colorScheme === 'dark' ? Styles.dark : Styles.light,
-    placeholderTextColor: colorScheme === 'dark' ? ThemeColors.dark.secondaryText : ThemeColors.light.secondaryText,
+    placeholderTextColor: colorScheme === 'dark' ?
+      ThemeColors.dark.secondaryText : ThemeColors.light.secondaryText,
     dimensions: {height: dimensions.height, width: dimensions.width}
   }
 
