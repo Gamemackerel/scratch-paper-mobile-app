@@ -1,7 +1,6 @@
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
-import { Platform } from 'react-native';
 import { useCallback, ReactNode } from 'react';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
 interface NoteGestureManagerProps {
   children: ReactNode;
@@ -30,17 +29,15 @@ export default function NoteGestureManager({ children, updateNote }: NoteGesture
 
   return (
     <GestureDetector gesture={fiveTapToClear}>
-      <GestureDetector gesture={nativeScroll}>
+      {/* <GestureDetector gesture={nativeScroll}>
         <KeyboardAwareScrollView
-          keyboardDismissMode={Platform.OS == 'ios' ? 'interactive' : 'on-drag'}
-          enableOnAndroid={true}
-          enableAutomaticScroll={Platform.OS == 'ios' ? true : false}
-        >
+          bottomOffset={10}
+        > */}
           <GestureDetector gesture={nativeTextInput}>
               { children }
           </GestureDetector>
-        </KeyboardAwareScrollView>
-      </GestureDetector>
+        {/* </KeyboardAwareScrollView>
+      </GestureDetector> */}
     </GestureDetector>
   );
 }
