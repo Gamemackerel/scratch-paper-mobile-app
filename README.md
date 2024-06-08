@@ -11,6 +11,7 @@ Update dependencies by following these [instructions](https://docs.expo.dev/work
 
 * Build new text editor using react-native-keyboard-controller or scratch keyboard controller. (KeyboardAwareScrollView is less than perfect)
 * Fix android notification icon (it's mysteriously blank)
+* Retain notification ordering of note
 
 ### Future work
 * Add two finger tap to begin dictation
