@@ -10,7 +10,7 @@ This is an expo app, start a development server with `npx expo start`
 Update dependencies by following these [instructions](https://docs.expo.dev/workflow/upgrading-expo-sdk-walkthrough/).
 
 #### TODO
-* Fix android notification icon (it's mysteriously blank, seems to be an issue in expo-notifications)
+* Add android notification icon image (it's mysteriously blank, seems to be an issue in expo-notifications)
 * Retain notification ordering
 
 #### Future work
