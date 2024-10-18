@@ -9,10 +9,10 @@ This is an expo app, start a development server with `npx expo start`
 
 Update dependencies by following these [instructions](https://docs.expo.dev/workflow/upgrading-expo-sdk-walkthrough/).
 
-## TODO
+#### TODO
 * Fix android notification icon (it's mysteriously blank, seems to be an issue in expo-notifications)
 * Retain notification ordering
 
-### Future work
+#### Future work
 * Add two finger tap to begin dictation
 * Swipe left to preview an AI "autocomplete" suggestion, swipe right to confirm suggestion
